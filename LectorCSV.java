@@ -1,3 +1,5 @@
+package archivos;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ public class LectorCSV
     String ficheroCSV;
     String separador = ",";
 
+    //region Constrcutores
     public LectorCSV(String ficheroCSV, String separador)
     {
         this.ficheroCSV = ficheroCSV;
@@ -20,7 +23,10 @@ public class LectorCSV
     {
         this.ficheroCSV = ficheroCSV;
     }
+    //endregion
 
+    //region Métodos
+    
     /**
      * Lee cada fila del array.
      *
@@ -49,11 +55,8 @@ public class LectorCSV
 
     /**
      * Devuelve la primera ocurrencia que cumple la condición indicada.
-     *
-     * @param encontrar
-     * @return
      */
-    public String[] encontrarFila(Function<String[], Boolean> encontrar)
+    public String[] encontrarFila(Function<String[], Boolean> fila)
     {
         String linea = "";
 
@@ -63,10 +66,10 @@ public class LectorCSV
         {
             while (( linea = br.readLine() ) != null)
             {
-                String[] fila = linea.split(separador);
-                boolean seHaEncontrado = encontrar.apply(fila);
+                String[] filaActual = linea.split(separador);
+                boolean seHaEncontrado = fila.apply(filaActual);
 
-                if (seHaEncontrado) return fila;
+                if (seHaEncontrado) return filaActual;
             }
         }
         catch (IOException e)
@@ -79,11 +82,8 @@ public class LectorCSV
 
     /**
      * Devuelve todas las ocurrencias que cumplen la condición indicada.
-     *
-     * @param encontrar
-     * @return
      */
-    public List<String[]> encontrarTodasLasFilas(Function<String[], Boolean> encontrar)
+    public List<String[]> encontrarTodasLasFilas(Function<String[], Boolean> fila)
     {
         String linea = "";
 
@@ -95,11 +95,11 @@ public class LectorCSV
         {
             while (( linea = br.readLine() ) != null)
             {
-                String[] fila = linea.split(separador);
+                String[] filaActual = linea.split(separador);
 
-                boolean seHaEncontrado = encontrar.apply(fila);
+                boolean seHaEncontrado = fila.apply(filaActual);
 
-                if (seHaEncontrado) filasEncontradas.add(fila);
+                if (seHaEncontrado) filasEncontradas.add(filaActual);
             }
         }
         catch (IOException e)
@@ -109,4 +109,6 @@ public class LectorCSV
 
         return filasEncontradas;
     }
+    
+    //endregion
 }
