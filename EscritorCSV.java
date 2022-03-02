@@ -39,6 +39,7 @@ public class EscritorCSV
 
         try (PrintWriter pw = new PrintWriter(ficheroCSV))
         {
+            //region Encabezado
             if (aniadirEncabezado)
             {
                 if (atributosAIgnorar == null) recorrerCampos(obj, (campo, valor) ->
@@ -55,7 +56,9 @@ public class EscritorCSV
 
                 pw.println(sbEncabezado);
             }
+            //endregion
 
+            //region Registros
             for (T item : lista)
             {
                 sbSeparador.setLength(0);
@@ -75,6 +78,7 @@ public class EscritorCSV
 
                 sbRegistros.append(sbRegistro).append('\n');
             }
+            //endregion
 
             pw.print(sbRegistros);
         }
@@ -108,6 +112,8 @@ public class EscritorCSV
         // https://stackoverflow.com/questions/2989560/how-to-get-the-fields-in-an-object-via-reflection
         for (Field campo : objeto.getClass().getDeclaredFields())
         {
+            if (campo_valor == null) throw new NullPointerException();
+
             // Se ignoran los campos nulos y estáticos
             if (campo == null || java.lang.reflect.Modifier.isStatic(campo.getModifiers())) continue;
             campo.setAccessible(true);
