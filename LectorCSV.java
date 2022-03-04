@@ -122,6 +122,8 @@ public class LectorCSV
              BufferedReader br = new BufferedReader(fr)
         )
         {
+            if (tieneCabecera) br.readLine(); // Si tiene cabecera se evita leerla
+            
             while (( linea = br.readLine() ) != null)
             {
                 String[] filaActual = linea.split(separador.toString());
@@ -151,6 +153,8 @@ public class LectorCSV
              BufferedReader br = new BufferedReader(fr)
         )
         {
+            if (tieneCabecera) br.readLine(); // Si tiene cabecera se evita leerla
+            
             while (( linea = br.readLine() ) != null)
             {
                 String[] filaActual = linea.split(separador.toString());
