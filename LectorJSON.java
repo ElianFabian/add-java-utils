@@ -20,7 +20,7 @@ public class LectorJSON<T>
         this.type = type;
     }
 
-    public T[] leerTodo()
+    public T[] leer()
     {
         try {
             JsonReader jsonReader = new JsonReader(new FileReader(fichero));
