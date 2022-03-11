@@ -6,24 +6,24 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public class LectorJSON<T>
+public class JSONReader<T>
 {
-    public final String fichero;
+    public final String filename;
     private final Gson gson;
     public final Class<T[]> type;
 
-    public LectorJSON(String fichero, Class<T[]> type)
+    public JSONReader(String filename, Class<T[]> type)
     {
-        this.fichero = fichero;
+        this.filename = filename;
         gson = new Gson();
         
         this.type = type;
     }
 
-    public T[] leer()
+    public T[] read()
     {
         try {
-            JsonReader jsonReader = new JsonReader(new FileReader(fichero));
+            JsonReader jsonReader = new JsonReader(new FileReader(filename));
             T[] o = gson.fromJson(jsonReader, type);
             jsonReader.close();
 

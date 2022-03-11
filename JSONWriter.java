@@ -4,22 +4,22 @@ import com.google.gson.stream.JsonWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class EscritorJSON<T>
+public class JSONWriter<T>
 {
-    public final String fichero;
+    public final String filename;
     private final Gson gson;
 
-    public EscritorJSON(String fichero)
+    public JSONWriter(String fichero)
     {
-        this.fichero = fichero;
+        this.filename = fichero;
         gson = new Gson();
     }
 
-    public void escribir(T[] data)
+    public void write(T[] data)
     {
         try
         {
-            JsonWriter jsonWriter = new JsonWriter(new FileWriter(fichero));
+            JsonWriter jsonWriter = new JsonWriter(new FileWriter(filename));
             gson.toJson(data, data.getClass(), jsonWriter);
             jsonWriter.close();
         }
