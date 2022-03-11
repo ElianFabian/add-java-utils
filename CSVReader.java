@@ -42,20 +42,20 @@ public class CSVReader
         this.delimiter = delimiter;
         this.hasHeader = hasHeader;
 
-        if(hasHeader) getHeader();
+        if (hasHeader) getHeader();
     }
     public CSVReader(String filename, boolean hasHeader)
     {
         this.filename = filename;
         this.hasHeader = hasHeader;
-        
+
         if (hasHeader) getHeader();
     }
     //endregion
 
     //region Methods
-    
-    public void read(Consumer<String[]> row)
+
+    public void readByPosition(Consumer<String[]> row)
     {
         String line;
 
@@ -77,8 +77,8 @@ public class CSVReader
             e.printStackTrace();
         }
     }
-    
-    public void readUsingName(Consumer<Row> row)
+
+    public void readByName(Consumer<Row> row)
     {
         String line;
         Row currentRow = new Row();
@@ -101,7 +101,7 @@ public class CSVReader
             e.printStackTrace();
         }
     }
-    
+
     public String[] findRow(Predicate<String[]> fila)
     {
         String line;
@@ -111,13 +111,13 @@ public class CSVReader
         )
         {
             if (hasHeader) br.readLine();
-            
+
             while (( line = br.readLine() ) != null)
             {
                 String[] currentRow = line.split(delimiter.toString());
-                
+
                 boolean hasBeenFound = fila.test(currentRow);
-                
+
                 if (hasBeenFound) return currentRow;
             }
         }
@@ -128,7 +128,7 @@ public class CSVReader
 
         return new String[]{ };
     }
-    
+
     public List<String[]> findRows(Predicate<String[]> row)
     {
         String line;
@@ -140,7 +140,7 @@ public class CSVReader
         )
         {
             if (hasHeader) br.readLine();
-            
+
             while (( line = br.readLine() ) != null)
             {
                 String[] currentRow = line.split(delimiter.toString());
