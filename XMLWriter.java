@@ -30,13 +30,13 @@ public class XMLWriter
      * If the inner object doesn't implement this interface then it will not be converted into a node
      * (it will only be converted into string).
      */
-    public static interface XMLObject { }
+    public interface XMLObject { }
 
     /**
      * The fields that present this annotation won't appear when an object is converted into a node.
      */
     @Retention(RetentionPolicy.RUNTIME)
-    public static @interface Ignore { }
+    public @interface Ignore { }
 
     Document document;
     String filename;
@@ -94,17 +94,17 @@ public class XMLWriter
 
     public <T> Element objectsToNodes(Element parentNode, String childrenNodeName, List<T> objectList, Set<String> attributesToIgnore)
     {
-        Element nodo = (Element) parentNode.cloneNode(true);
+        Element node = (Element) parentNode.cloneNode(true);
 
         objectList.forEach(objeto ->
 
-                nodo.appendChild(objectToNode(
+                node.appendChild(objectToNode(
                         childrenNodeName,
                         objeto,
                         attributesToIgnore
                 ))
         );
-        return nodo;
+        return node;
     }
     public <T> Element objectsToNodes(Element parentNode, String childrenNodeName, List<T> objectList)
     {
