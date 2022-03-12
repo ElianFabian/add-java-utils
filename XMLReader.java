@@ -44,6 +44,8 @@ public class XMLReader
         //endregion
     }
 
+    //region Constructors
+    
     public XMLReader(String filename)
     {
         Document document = null;
@@ -61,7 +63,11 @@ public class XMLReader
         this.document = document;
         this.filename = document.getDocumentURI();
     }
+    
+    //endregion
 
+    //region Methods
+    
     public void readNodesByName(String nodename, Consumer<Node> nodeConsumer)
     {
         Node node = new Node();
@@ -102,4 +108,6 @@ public class XMLReader
 
         return objects;
     }
+    
+    //endregion
 }
