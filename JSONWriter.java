@@ -12,6 +12,7 @@ public class JSONWriter<T>
     public JSONWriter(String fichero)
     {
         this.filename = fichero;
+
         gson = new Gson();
     }
 
