@@ -1,3 +1,5 @@
+package com.elian;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -67,15 +69,41 @@ public class CSVReader
 
             while (( line = br.readLine() ) != null)
             {
-                String[] columns = line.split(delimiter.toString());
+                String[] currentRow = line.split(delimiter.toString());
 
-                row.accept(columns);
+                row.accept(currentRow);
             }
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
+    }
+
+    public List<String[]> readByPosition()
+    {
+        String line;
+        List<String[]> rows = new ArrayList<>();
+
+        try (FileReader fr = new FileReader(filename);
+             BufferedReader br = new BufferedReader(fr)
+        )
+        {
+            if (hasHeader) br.readLine();
+
+            while (( line = br.readLine() ) != null)
+            {
+                String[] currentRow = line.split(delimiter.toString());
+
+                rows.add(currentRow);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return rows;
     }
 
     public void readByName(Consumer<Row> row)
@@ -100,6 +128,38 @@ public class CSVReader
         {
             e.printStackTrace();
         }
+    }
+
+    public List<HashMap<String, String>> readByName()
+    {
+        String line;
+        List<HashMap<String, String>> rows = new ArrayList<>();
+
+        try (FileReader fr = new FileReader(filename);
+             BufferedReader br = new BufferedReader(fr)
+        )
+        {
+            if (hasHeader) br.readLine();
+
+            while (( line = br.readLine() ) != null)
+            {
+                String[] currentRow = line.split(delimiter.toString());
+                HashMap<String, String> namedRow = new HashMap<>();
+
+                headerHashMap.forEach((columnName, position) ->
+                {
+                    namedRow.put(columnName, currentRow[position]);
+                });
+
+                rows.add(namedRow);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return rows;
     }
 
     public String[] findRow(Predicate<String[]> fila)
