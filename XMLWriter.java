@@ -3,6 +3,9 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -25,6 +28,9 @@ public class XMLWriter
 {
     //region Attributes
 
+    public final Document document;
+    public final String filename;
+
     /**
      * This class will be used when an object that contains an object is turn into a node.
      * If the inner object doesn't implement this interface then it will not be converted into a node
@@ -38,24 +44,33 @@ public class XMLWriter
     @Retention(RetentionPolicy.RUNTIME)
     public @interface Ignore { }
 
-    Document document;
-    String filename;
-
     //endregion
 
     //region Constructos
-    public XMLWriter(String filename, Document document)
+    public XMLWriter(String filename)
     {
-        this.filename = filename;
+        Document document = null;
+
+        try
+        {
+            DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            document = docBuilder.parse(filename);
+        }
+        catch (ParserConfigurationException | IOException | SAXException e)
+        {
+            e.printStackTrace();
+        }
+
         this.document = document;
+        this.filename = document.getDocumentURI();
     }
     //endregion
 
     //region Methods
     
-    public <T> Element objectToNode(String nodename, T object, Set<String> attributesToIgnore)
+    public <T> Element objectToNode(String nodeName, T object, Set<String> attributesToIgnore)
     {
-        Element node = document.createElement(nodename);
+        Element node = document.createElement(nodeName);
 
         if (attributesToIgnore == null) loopThroughFields(object, (field, value) ->
         {
@@ -87,9 +102,9 @@ public class XMLWriter
         }
     }
 
-    public <T> Element objectToNode(String nodoNombre, T objeto)
+    public <T> Element objectToNode(String nodeName, T objeto)
     {
-        return objectToNode(nodoNombre, objeto, null);
+        return objectToNode(nodeName, objeto, null);
     }
 
     public <T> Element objectsToNodes(Element parentNode, String childrenNodeName, List<T> objectList, Set<String> attributesToIgnore)
