@@ -15,9 +15,9 @@ public class JSONReader<T>
     public JSONReader(String filename, Class<T[]> type)
     {
         this.filename = filename;
-        gson = new Gson();
-        
         this.type = type;
+        
+        gson = new Gson();
     }
 
     public T[] read()
