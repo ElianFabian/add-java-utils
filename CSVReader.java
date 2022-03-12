@@ -1,5 +1,3 @@
-package com.elian;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,11 +17,11 @@ public class CSVReader
 
     public class Row
     {
-        String[] row;
+        String[] content;
 
         public String getString(String column)
         {
-            return row[headerHashMap.get(column)];
+            return content[headerHashMap.get(column)];
         }
 
         public int getInt(String column)
@@ -119,7 +117,7 @@ public class CSVReader
 
             while (( line = br.readLine() ) != null)
             {
-                currentRow.row = line.split(delimiter.toString());
+                currentRow.content = line.split(delimiter.toString());
 
                 row.accept(currentRow);
             }
@@ -145,12 +143,12 @@ public class CSVReader
             {
                 String[] currentRow = line.split(delimiter.toString());
                 HashMap<String, String> namedRow = new HashMap<>();
-
+                
                 headerHashMap.forEach((columnName, position) ->
                 {
                     namedRow.put(columnName, currentRow[position]);
                 });
-
+                
                 rows.add(namedRow);
             }
         }
@@ -158,11 +156,11 @@ public class CSVReader
         {
             e.printStackTrace();
         }
-
+        
         return rows;
     }
 
-    public String[] findRow(Predicate<String[]> fila)
+    public String[] findRow(Predicate<String[]> row)
     {
         String line;
 
@@ -176,7 +174,7 @@ public class CSVReader
             {
                 String[] currentRow = line.split(delimiter.toString());
 
-                boolean hasBeenFound = fila.test(currentRow);
+                boolean hasBeenFound = row.test(currentRow);
 
                 if (hasBeenFound) return currentRow;
             }
