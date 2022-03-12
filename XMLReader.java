@@ -68,10 +68,10 @@ public class XMLReader
 
     //region Methods
     
-    public void readNodesByName(String nodename, Consumer<Node> nodeConsumer)
+    public void readNodesByName(String nodeName, Consumer<Node> nodeConsumer)
     {
         Node node = new Node();
-        NodeList nodeList = document.getElementsByTagName(nodename);
+        NodeList nodeList = document.getElementsByTagName(nodeName);
 
         for (int i = 0; i < nodeList.getLength(); i++)
         {
@@ -81,11 +81,11 @@ public class XMLReader
         }
     }
 
-    public List<HashMap<String, String>> readNodesByName(String nodename)
+    public List<HashMap<String, String>> readNodesByName(String nodeName)
     {
         List<HashMap<String, String>> objects = new ArrayList<>();
 
-        NodeList nodeList = document.getElementsByTagName(nodename);
+        NodeList nodeList = document.getElementsByTagName(nodeName);
 
         for (int i = 0; i < nodeList.getLength(); i++)
         {
