@@ -9,8 +9,8 @@ import java.util.function.Predicate;
 
 public class CSVReader
 {
-    public String filename;
-    public Character delimiter = ',';
+    public final String filename;
+    public Character delimiter;
 
     private final boolean hasHeader;
     private final HashMap<String, Integer> headerHashMap = new HashMap<>();
@@ -36,6 +36,7 @@ public class CSVReader
     }
 
     //region Constructors
+    
     public CSVReader(String filename, boolean hasHeader, Character delimiter)
     {
         this.filename = filename;
@@ -44,13 +45,7 @@ public class CSVReader
 
         if (hasHeader) getHeader();
     }
-    public CSVReader(String filename, boolean hasHeader)
-    {
-        this.filename = filename;
-        this.hasHeader = hasHeader;
-
-        if (hasHeader) getHeader();
-    }
+    
     //endregion
 
     //region Methods
