@@ -1,5 +1,3 @@
-package com.elian;
-
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -45,7 +43,7 @@ public class XMLReader
     }
 
     //region Constructors
-    
+
     public XMLReader(String filename)
     {
         Document document = null;
@@ -63,29 +61,29 @@ public class XMLReader
         this.document = document;
         this.filename = document.getDocumentURI();
     }
-    
+
     //endregion
 
     //region Methods
-    
-    public void readNodesByName(String nodeName, Consumer<Node> nodeConsumer)
+
+    public void readNodesByName(String nodename, Consumer<Node> node)
     {
-        Node node = new Node();
-        NodeList nodeList = document.getElementsByTagName(nodeName);
+        Node currentNode = new Node();
+        NodeList nodeList = document.getElementsByTagName(nodename);
 
         for (int i = 0; i < nodeList.getLength(); i++)
         {
-            node.content = (Element) nodeList.item(i);
+            currentNode.content = (Element) nodeList.item(i);
 
-            nodeConsumer.accept(node);
+            node.accept(currentNode);
         }
     }
 
-    public List<HashMap<String, String>> readNodesByName(String nodeName)
+    public List<HashMap<String, String>> readNodesByName(String nodename)
     {
         List<HashMap<String, String>> objects = new ArrayList<>();
 
-        NodeList nodeList = document.getElementsByTagName(nodeName);
+        NodeList nodeList = document.getElementsByTagName(nodename);
 
         for (int i = 0; i < nodeList.getLength(); i++)
         {
@@ -108,6 +106,6 @@ public class XMLReader
 
         return objects;
     }
-    
+
     //endregion
 }
