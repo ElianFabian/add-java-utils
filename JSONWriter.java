@@ -9,10 +9,9 @@ public class JSONWriter<T>
     public final String filename;
     private final Gson gson;
 
-    public JSONWriter(String fichero)
+    public JSONWriter(String filename)
     {
-        this.filename = fichero;
-
+        this.filename = filename;
         gson = new Gson();
     }
 
